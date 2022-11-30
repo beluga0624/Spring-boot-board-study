@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board.board.mapper.BoardMapper">
+	<select id="selectBoardList" resultType="board.board.dto.BoardDto">
+		<![CDATA[
+			select board_idx, title, hit_cnt, created_datetime
+			from t_board
+			where deleted_yn = 'N'
+			order by board_idx desc
+		]]>
+	</select>
+	
+	<!-- 
+		useGeneratedKeys : t_board 테이블의 board_idx를 autoincrement로 선언한 경우
+			이 속성을 사용하여 insert되는 key값을 리턴 받을 수 있다. 
+	-->
+	<insert id="insertBoard" parameterType="board.board.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardIdx">
+		<![CDATA[
+			insert into t_board (title, contents, created_datetime, creator_id)
+				values(#{title}, #{contents}, now(), 'admin')
+		]]>
+	</insert>
+	
+	<!-- 
+		collection : 리턴받은 list를 선언 item은 collection에서 한 row 씩 가져와 item 변수에 대입
+			separator는 insert시 여러 row를 구분하기 위한 구분자	
+	-->
+	<insert id="insertBoardFileList" parameterType="board.board.dto.BoardFileDto">
+		<![CDATA[
+			insert into t_file
+			(
+				board_idx,
+				original_file_name,
+				stored_file_path,
+				file_size,
+				creator_id,
+				created_datetime
+			)
+			VALUES
+		]]>
+		
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.boardIdx}, 
+				#{item.originalFileName}, 
+				#{item.storedFilePath}, 
+				#{item.fileSize}, 
+				'admin', 
+				NOW()
+			)
+		</foreach>
+	</insert>
+	
+	<update id="updateHitCount" parameterType="int">
+		<![CDATA[
+			update t_board
+			set hit_cnt = hit_cnt + 1
+			where board_idx = #{boardIdx}
+		]]>
+	</update>
+	
+	<select id="selectBoardDetail" parameterType="int" resultType="board.board.dto.BoardDto">
+		<![CDATA[
+			select board_idx, title, contents, hit_cnt, created_datetime, creator_id
+			from t_board
+			where board_idx = #{boardIdx} and deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<select id="selectBoardFileList" parameterType="int" resultType="board.board.dto.BoardFileDto">
+		<![CDATA[
+			select idx, board_idx, original_file_name, round(file_size/1024) as file_size
+			from t_file
+			where board_idx = #{boardIdx} and deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<update id="updateBoard" parameterType="board.board.dto.BoardDto">
+		<![CDATA[
+			update t_board set title = #{title}, contents = #{contents}, updated_datetime = now(), updater_id = 'admin'
+			where board_idx = #{boardIdx}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			update t_board set deleted_yn = 'Y', updated_datetime = now(), updater_id = 'admin'
+			where board_idx = #{boardIdx}
+		]]>
+	</delete>
+	
+	<select id="selectBoardFileInformation" parameterType="map" resultType="board.board.dto.BoardFileDto">
+		<![CDATA[
+			select original_file_name, stored_file_path, file_size
+			from t_file
+			where idx = #{idx}
+			and board_idx = #{boardIdx}
+			and deleted_yn = 'N'
+		]]>
+	</select>
+</mapper>

@@ -1,0 +1,209 @@
+/* 문자인코딩 */
+@charset "UTF-8";
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css);
+
+/* 
+overflow 에 사용할 수 있는 값은 네가지가 있습니다.
+visible : 기본 값입니다. 넘칠 경우 컨텐츠가 상자 밖으로 보여집니다.
+hidden : 넘치는 부분은 잘려서 보여지지 않습니다.
+scroll : 스크롤바가 추가되어 스크롤할 수 있습니다.(가로, 세로 모두 추가 됩니다.)
+auto : 컨텐츠 량에 따라 스크롤바를 추가할지 자동으로 결정됩니다.( 필요에 따라 가로, 세로 별도로 추가될 수도 있습니다.) */
+
+html {
+	overflow: scorll;
+}
+
+html, body, div, h1, h2, a, form, table, caption, thead, tbody, tr, th,
+	td, submit {
+	margin: 0;
+	outline: 0;
+	border: 0;
+	padding: 0;
+	font-size: 100%;
+	/* 수직정렬 */
+	vertical-align: baseline;
+	background: transparent;/* 배경 전체 투명*/
+}
+
+body {
+	font-size: 0.875em;
+	line-height: 1.5;/* 줄높이 */
+	color: #666;
+	/*화면의 폭에 맞게 텍스트의 크기를 자동으로 조절한다.*/
+	-webkit-text-size-adjust: none;
+	min-width: 320px;
+	font-family: 'NanumGothic', '나눔고딕', dotum, "Helvetica Neue", Helvetica,
+		Verdana, Arial, Sans-Serief;
+}
+
+h1, h2, h3 {
+	font-size: 1.5em;/* em = 16px,1.5em = 1.5 * 16 = 24px */
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	margin: 0;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: #656565;
+}
+
+input {
+	vertical-align: middle;
+}
+
+input:focus {
+	outline: 0;
+}
+
+caption {
+	display: none;
+	width: 0;
+	height: 0;
+	margin-top: -1px;
+	overflow: hidden;
+	visibility: hidden;
+	font-size: 0;
+	line-height: 0;
+}
+
+.container {
+	max-width: 1024px;
+	margin: 30px auto;
+}
+
+.board_list {
+	width: 100%;
+	border-top: 2px solid #252525;
+	border-bottom: 1px solid #ccc;
+	margin: 15px 0;
+	border-collapse: collapse;
+}
+
+.board_list thead th:first-child {
+	background-image: none;
+}
+
+.board_list thead th {
+	border-bottom: 1px solid #ccc;
+	padding: 13px 0;
+	color: #3b3a3a;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.board_list tbody td {
+	border-top: 1px solid #ccc;
+	padding: 13px 0;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.board_list tbody tr:first-child td {
+	border: none;
+}
+
+.board_list tbody tr:hover {
+	background: #ffff99;
+}
+
+.board_list tbody td.title {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.board_list tbody td a {
+	display: inline-block
+}
+
+.board_detail {
+	width: 100%;
+	border-top: 2px solid #252525;
+	border-bottom: 1px solid #ccc;
+	border-collapse: collapse;
+}
+
+.board_detail tbody input {
+	width: 100%;
+}
+
+.board_detail tbody th {
+	text-align: left;
+	background: #f7f7f7;
+	color: #3b3a3a;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.board_detail tbody th, .board_detail tbody td {
+	padding: 10px 15px;
+	border-bottom: 1px solid #ccc;
+}
+
+.board_detail tbody textarea {
+	width: 100%;
+	min-height: 170px
+}
+
+.btn {
+	margin: 5px;
+	padding: 5px 11px;
+	color: #fff !important;
+	display: inline-block;
+	background-color: #7D7F82;
+	vertical-align: middle;
+	border-radius: 0 !important;
+	cursor: pointer;
+	border: none;
+}
+
+.btn:hover {
+	background: #6b9ab8;
+}
+
+/*
+CSS는 같은 속성을 여러 번 정의했을 때, 나중에 설정한 값이 적용됩니다. 
+만약 나중에 설정한 값이 적용되지 않게 하려면 속성값 뒤에 !important를 붙입니다.
+
+문법
+property: value !important;
+예를 들어 다음은 마지막에 설정한 color의 값이 blue이므로, red는 무시하고 문단의 글자색을 파란색으로 만듭니다.
+
+p {
+  color: red;
+}
+p {
+  color: blue;
+}
+하지만 다음은 red에 !important가 있으므로 문단의 글자색을 빨간색으로 유지합니다.
+
+p {
+  color: red !important;
+}
+p {
+  color: blue;
+}
+다시 속성값을 재설정하고 싶으면 !important를 다시 붙입니다. 예를 들어 다음은 문단의 글자색을 녹색으로 만듭니다.
+
+p {
+  color: red !important;
+}
+p {
+  color: blue;
+}
+p {
+  color: green !important;
+}
+*/
+
+.file_list a {
+	display: inherit !important;
+}
